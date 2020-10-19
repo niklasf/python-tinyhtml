@@ -134,3 +134,10 @@ Features and patterns
       ['Hello world', '!']
       >>> "".join(builder)
       'Hello world!'
+
+License
+-------
+
+tinyhtml is dual-licensed under the
+`Apache 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_ and
+`MIT <http://opensource.org/licenses/MIT>`_ license, at your option.
