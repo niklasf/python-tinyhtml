@@ -3,7 +3,7 @@ import abc
 from typing import Union, Dict
 
 
-Attribute = Union[str, int, bool, Dict[str, bool], None]
+Attribute = Union[str, int, bool, Iterable[Union[str, int]], Dict[str, bool], None]
 
 Child = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
 
@@ -20,6 +20,20 @@ def _render_into(child: Child, builder: List[str]) -> None:
             _render_into(c, builder)
     else:
         builder.append(html.escape(str(child), quote=False))
+
+
+def _normalize_attr(attr: str) -> str:
+    if attr == "klass":
+        return "class"
+
+    # See "Attribute names" in
+    # https://www.w3.org/TR/html52/syntax.html#elements-attributes.
+    attr = attr.rstrip("_").replace("_", "-")
+    if not (attr and attr.isascii() and all(ch.isalnum() or ch == "-" for ch in attr)):
+        raise ValueError(f"invalid html attribute: {attr!r}")
+
+    return attr
+
 
 
 class Frag(abc.ABC):
@@ -39,12 +53,49 @@ class Frag(abc.ABC):
 
 
 class h(Frag):
-    def __init__(self, __name: str, **attrs: Attribute):
+    def __init__(self, __name: str, attrs: Dict[str, Attribute]) -> None:
+        # See "Tag name" in
+        # https://www.w3.org/TR/html52/syntax.html#writing-html-documents-elements.
+        if not (__name and __name.isascii() and __name.isalnum()):
+            raise ValueError(f"invalid html tag: {__name!r}")
         self.name = __name
+
         self.attrs = attrs
 
-    def __call__(self, *arg: Child):
-        return _h(self, arg)
+    def render_into(self, builder: List[str]) -> None:
+        builder.append("<")
+        builder.append(self.name)
+        for attr, value in self.attrs.items():
+            if value is False or value is None:
+                continue
+            builder.append(" ")
+            builder.append(attr)
+            if value is True:
+                continue
+            if isinstance(value, dict):
+                value = " ".join(key for key, val in value if val)
+            elif not isinstance(value, str) and hasttr(value, "__iter__"):
+                value = " ".join(str(val) for val in value)
+            builder.append("=\"")
+            builder.append(escape(str(value)))
+            builder.append("\"")
+
+    def __call__(self, *children: Child) -> NormalElement:
+        return _h(self, children)
+
+
+class _h(Frag):
+    def __init__(self, tag: h, children: List[Child]) -> None:
+        self.tag = tag
+        self.children = children
+
+    def render_into(self, builder: List[str]) -> None:
+        self.tag.render_into(builder)
+        for child in self.children:
+            _render_into(child, builder)
+        builder.append("</")
+        builder.append(self.tag.name)
+        builder.append(">")
 
 
 class raw(Frag):
@@ -60,12 +111,24 @@ class frag(Frag):
         self.children = children
 
     def render_into(self, builder: List[str]) -> None:
-        for child in children:
+        for child in self.children:
+            _render_into(child, builder)
 
 
-def comment(text: str) -> Frag:
-    return frag(raw("<!--"), raw(html.escape(text)), raw("-->"))
+class html(h):
+    def __init__(self, **attrs: Attribute) -> None:
+        super().__init__("html", **attrs)
+
+    def render_into(self, builder: List[str]) -> None:
+        builder.append("<!DOCTYPE html>")
+        super().render_into(builder)
 
 
-def html(*children: Child) -> Frag:
-    return frag(raw("<!DOCTYPE html>"), h("html")(*children))
+class comment:
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+    def render_into(self, builder: List[str]) -> None:
+        builder.append("<!--")
+        builder.append(escape(self.text, quote=False))
+        builder.append("-->")
