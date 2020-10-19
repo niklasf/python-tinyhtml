@@ -75,7 +75,8 @@ Features and patterns
       raw('<!DOCTYPE html><html><head><title>Hello world</title></head><body><h1>Hello world</h1><p>Lorem ipsum dolor sit amet.</p></body></html>')
 
 * Use ``str``, ``int``, other fragments, ``None``, or iterables of these as
-  **child elements**.
+  **child elements**. (Note that rendering consumes the iterables, so fragments
+  using generators can be rendered only once.)
 
   .. code:: python
 
