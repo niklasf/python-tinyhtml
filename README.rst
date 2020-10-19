@@ -6,14 +6,14 @@ Introduction
 
 This is the entire API.
 
-... code:: python
+.. code:: python
 
     >>> from tinyhtml import html, h, frag, raw
 
 The most important function is `h()`. Below you see how to render attributes,
 normal elements and void/self-closing elements.
 
-... code:: python
+.. code:: python
 
     >>> html(lang="en")(
     ...     h("head")(
@@ -24,7 +24,7 @@ normal elements and void/self-closing elements.
 
 Use `frag()` to pass around concatenated elements.
 
-... code:: python
+.. code:: python
 
     >>> frag(
     ...     h("h1")("Lorem ipsum ..."),
@@ -35,7 +35,7 @@ Use `frag()` to pass around concatenated elements.
 Of course all attributes and content is properly escaped. Use `raw()` as an
 escape catch to render unescaped HTML.
 
-... code:: python
+.. code:: python
 
     >>> raw("<!--")
     raw('<!--')
