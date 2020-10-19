@@ -1,0 +1,9 @@
+copyright header
+maybe remove attribute quotes
+maybe do not quote '
+mypy
+setup.py
+test
+ci
+port syzygy as proof of concept
+publish
