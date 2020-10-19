@@ -53,7 +53,7 @@ Features and patterns
 
       >>> from tinyhtml import Frag
 
-* Write templates as functions.
+* Write **templates** as functions.
 
   .. code:: python
 
@@ -72,7 +72,7 @@ Features and patterns
       raw('<!DOCTYPE html><html><head><title>Hello world</title></head><body><h1>Hello world</h1><p>Lorem ipsum dolor sit amet.</p></body></html>')
 
 * Use ``str``, ``int``, other fragments, ``None``, or iterables of these as
-  child elements.
+  **child elements**.
 
   .. code:: python
 
@@ -88,7 +88,7 @@ Features and patterns
       raw('<ul><li>Bar</li></ul>')
 
 * Use ``str``, ``int``, ``None``, iterables of these, ``bool``, or dictionaries
-  with boolean values as attributes.
+  with boolean values as **attributes**.
 
   .. code:: python
 
