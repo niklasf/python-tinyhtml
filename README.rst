@@ -14,3 +14,9 @@ tinyhtml
 
     >>> raw("<!--")
     raw('<!--')
+
+    >>> frag(
+    ...     h("h1")("Lorem ipsum ..."),
+    ...     h("p")("... dolor sit amet."),
+    ... )
+    raw('<h1>Lorem ipsum ...</h1><p>... dolor sit amet.</p>')
