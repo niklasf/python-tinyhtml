@@ -19,8 +19,8 @@ normal elements and void/self-closing elements.
     ...     h("head")(
     ...         h("meta", charset="utf-8"),
     ...     ),
-    ... )
-    raw('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"></head></html>')
+    ... ).render()
+    '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"></head></html>'
 
 Use ``frag()`` to pass around concatenated elements.
 
@@ -29,8 +29,8 @@ Use ``frag()`` to pass around concatenated elements.
     >>> frag(
     ...     h("h1")("Lorem ipsum ..."),
     ...     h("p")("... dolor sit amet."),
-    ... )
-    raw('<h1>Lorem ipsum ...</h1><p>... dolor sit amet.</p>')
+    ... ).render()
+    '<h1>Lorem ipsum ...</h1><p>... dolor sit amet.</p>'
 
 Of course all attributes and content is properly escaped. Use ``raw()`` as an
 escape catch to render unescaped HTML.
@@ -38,7 +38,7 @@ escape catch to render unescaped HTML.
 .. code:: python
 
     >>> raw("<!--").render()
-    raw('<!--')
+    '<!--'
 
 Features and patterns
 ---------------------
@@ -54,15 +54,15 @@ Features and patterns
       >>> from tinyhtml import Frag
 
       >>> def layout(title: str, body: Frag) -> Frag:
-      ...     return html(
+      ...     return html()(
       ...        h("head")(
       ...            h("title")(title),
       ...        ),
       ...        h("body")(body)
       ...     )
-      ...
-      ... layout("Hello world", frag(
+
+      >>> layout("Hello world", frag(
       ...     h("h1")("Hello world"),
       ...     h("p")("Lorem ipsum dolor sit amet."),
-      ... )
-      raw('<!DOCTYPE html><html><head><title>Hello world</title></head><body>Lorem ipsum dolor sit amet</body></html>')
+      ... )).render()
+      '<!DOCTYPE html><html><head><title>Hello world</title></head><body><h1>Hello world</h1><p>Lorem ipsum dolor sit amet.</p></body></html>'
