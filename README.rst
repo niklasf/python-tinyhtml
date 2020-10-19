@@ -139,6 +139,13 @@ Features and patterns
       >>> "".join(builder)
       'Hello world!'
 
+Installing
+----------
+
+::
+
+    pip install tinyhtml
+
 License
 -------
 
