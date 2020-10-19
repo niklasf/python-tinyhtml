@@ -49,7 +49,7 @@ class h(Frag):
             if value is True:
                 continue
             if isinstance(value, dict):
-                value = " ".join(key for key, val in value if val)
+                value = " ".join(key for key, val in value.items() if val)
             elif not isinstance(value, str) and hasattr(value, "__iter__"):
                 value = " ".join(str(val) for val in value)
             builder.append("=\"")

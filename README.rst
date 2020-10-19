@@ -83,9 +83,27 @@ Features and patterns
       ... )
       raw('<ul><li>Bar</li></ul>')
 
-* Use ``klass``, append a trailing underscore (``for_``), or use underscores
-  instead of dashes (``http_equiv``) for attribute names that cannot be
-  Python identifiers.
+* Use ``str``, ``int``, ``None``, iterables of these, ``bool`` or dictionaries
+  with boolean values as attributes.
+
+  .. code:: python
+
+      >>> h("input", type="checkbox", checked=True, disabled=False)
+      raw('<input type="checkbox" checked>')
+
+      >>> h("body", klass=["a", "b"])()
+      raw('<body class="a b"></body>')
+
+      >>> h("body", klass={
+      ...    "a": True,
+      ...    "b": False,
+      ... })()
+      raw('<body class="a"></body>')
+
+
+* Use ``klass`` instead of ``class``, append a trailing underscore (``for_``),
+  or use underscores instead of dashes (``http_equiv``) for attribute names
+  that cannot be Python identifiers.
 
   .. code:: python
 
@@ -97,4 +115,3 @@ Features and patterns
 
       >>> h("meta", http_equiv="refresh", content=10)
       raw('<meta http-equiv="refresh" content="10">')
-
