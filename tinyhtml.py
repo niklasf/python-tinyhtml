@@ -1,11 +1,9 @@
+from __future__ import annotations
+
 import abc
+from html import escape
 
-from typing import Union, Dict
-
-
-Attribute = Union[str, int, bool, List[Union[str, int]], Dict[str, bool], None]
-
-Child = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
+from typing import Union, Dict, Iterable
 
 
 class Frag(abc.ABC):
@@ -24,6 +22,12 @@ class Frag(abc.ABC):
         return f"raw({self.render()!r})"
 
 
+Child = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
+
+
+Attribute = Union[str, int, bool, Iterable[Union[str, int]], Dict[str, bool], None]
+
+
 class h(Frag):
     def __init__(self, __name: str, attrs: Dict[str, Attribute]) -> None:
         # See "Tag name" in
@@ -32,7 +36,7 @@ class h(Frag):
             raise ValueError(f"invalid html tag: {__name!r}")
         self.name = __name
 
-        self.attrs = attrs
+        self.attrs = {_normalize_attr(attr): value for attr, value in attrs.items()}
 
     def render_into(self, builder: List[str]) -> None:
         builder.append("<")
@@ -96,28 +100,18 @@ class html(h):
         super().render_into(builder)
 
 
-class comment:
-    def __init__(self, text: str) -> None:
-        self.text = text
-
-    def render_into(self, builder: List[str]) -> None:
-        builder.append("<!--")
-        builder.append(escape(self.text, quote=False))
-        builder.append("-->")
-
-
 def _render_into(child: Child, builder: List[str]) -> None:
     if child is None:
         return
     elif isinstance(child, str):
-        builder.append(html.escape(child, quote=False))
+        builder.append(escape(child, quote=False))
     elif isinstance(child, Frag):
         child.render_into(frag)
     elif hasttr(child, "__iter__"):
         for c in child:
             _render_into(c, builder)
     else:
-        builder.append(html.escape(str(child), quote=False))
+        builder.append(escape(str(child), quote=False))
 
 
 def _normalize_attr(attr: str) -> str:
