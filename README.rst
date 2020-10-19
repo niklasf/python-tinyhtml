@@ -1,17 +1,20 @@
 tinyhtml
 ========
 
+A tiny library to safely render compact HTML5 from Python expressions.
+
 Introduction
 ------------
 
-This is the entire API.
+This is the entire API. The following documentation is longer than the
+implementation.
 
 .. code:: python
 
     >>> from tinyhtml import html, h, frag, raw
 
 The most important function is ``h()``. Below you see how to render attributes,
-normal elements and void/self-closing elements.
+normal elements, and void/self-closing elements.
 
 .. code:: python
 

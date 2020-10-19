@@ -5,5 +5,5 @@ import setuptools
 setuptools.setup(
     name="tinyhtml",
     version="1.0.0",
-    description="Safely produce modern HTML using functional-style Python code",
+    description="A tiny library to safely render compact HTML5 from Python expressions.",
 )
