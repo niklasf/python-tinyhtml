@@ -3,37 +3,9 @@ import abc
 from typing import Union, Dict
 
 
-Attribute = Union[str, int, bool, Iterable[Union[str, int]], Dict[str, bool], None]
+Attribute = Union[str, int, bool, List[Union[str, int]], Dict[str, bool], None]
 
 Child = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
-
-
-def _render_into(child: Child, builder: List[str]) -> None:
-    if child is None:
-        return
-    elif isinstance(child, str):
-        builder.append(html.escape(child, quote=False))
-    elif isinstance(child, Frag):
-        child.render_into(frag)
-    elif hasttr(child, "__iter__"):
-        for c in child:
-            _render_into(c, builder)
-    else:
-        builder.append(html.escape(str(child), quote=False))
-
-
-def _normalize_attr(attr: str) -> str:
-    if attr == "klass":
-        return "class"
-
-    # See "Attribute names" in
-    # https://www.w3.org/TR/html52/syntax.html#elements-attributes.
-    attr = attr.rstrip("_").replace("_", "-")
-    if not (attr and attr.isascii() and all(ch.isalnum() or ch == "-" for ch in attr)):
-        raise ValueError(f"invalid html attribute: {attr!r}")
-
-    return attr
-
 
 
 class Frag(abc.ABC):
@@ -132,3 +104,32 @@ class comment:
         builder.append("<!--")
         builder.append(escape(self.text, quote=False))
         builder.append("-->")
+
+
+def _render_into(child: Child, builder: List[str]) -> None:
+    if child is None:
+        return
+    elif isinstance(child, str):
+        builder.append(html.escape(child, quote=False))
+    elif isinstance(child, Frag):
+        child.render_into(frag)
+    elif hasttr(child, "__iter__"):
+        for c in child:
+            _render_into(c, builder)
+    else:
+        builder.append(html.escape(str(child), quote=False))
+
+
+def _normalize_attr(attr: str) -> str:
+    if attr == "klass":
+        return "class"
+
+    if "_" in attr:
+        attr = attr.rstrip("_").replace("_", "-")
+
+    # Slightly more restrictive than "Attribute names" in
+    # https://www.w3.org/TR/html52/syntax.html#elements-attributes.
+    if not (attr and attr.isascii() and all(ch.isalnum() or ch == "-" for ch in attr)):
+        raise ValueError(f"invalid html attribute: {attr!r}")
+
+    return attr
