@@ -1,4 +1,4 @@
-tinyhtml
+tinyhtml (Work in progress!)
 ========
 
 A tiny library to safely render compact HTML5 from Python expressions.
@@ -47,6 +47,10 @@ Features and patterns
 ---------------------
 
 * Supports Python 3.7+.
+
+* Output is compact: Naturally produces no superfluous whitespace between
+  elements. Saves a few bytes by eliding attribute quotes where safe, but does
+  *not* apply risky minification tricks that depend on context.
 
 * Fragments provide ``_repr_html_()`` for Jupyter Notebook integration.
 
