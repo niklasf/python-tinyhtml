@@ -37,5 +37,32 @@ escape catch to render unescaped HTML.
 
 .. code:: python
 
-    >>> raw("<!--")
+    >>> raw("<!--").render()
     raw('<!--')
+
+Features and patterns
+---------------------
+
+* Supports Python 3.7+.
+
+* Includes mypy typings.
+
+* Write templates as functions.
+
+  .. code:: python
+
+      >>> from tinyhtml import Frag
+
+      >>> def layout(title: str, body: Frag) -> Frag:
+      ...     return html(
+      ...        h("head")(
+      ...            h("title")(title),
+      ...        ),
+      ...        h("body")(body)
+      ...     )
+      ...
+      ... layout("Hello world", frag(
+      ...     h("h1")("Hello world"),
+      ...     h("p")("Lorem ipsum dolor sit amet."),
+      ... )
+      raw('<!DOCTYPE html><html><head><title>Hello world</title></head><body>Lorem ipsum dolor sit amet</body></html>')
