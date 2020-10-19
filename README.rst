@@ -45,13 +45,17 @@ Features and patterns
 
 * Supports Python 3.7+.
 
-* Includes mypy typings.
+* Fragments provide ``_repr_html_()`` for Jupyter Notebook integration.
 
-* Write templates as functions.
+* Includes mypy typings.
 
   .. code:: python
 
       >>> from tinyhtml import Frag
+
+* Write templates as functions.
+
+  .. code:: python
 
       >>> def layout(title: str, body: Frag) -> Frag:
       ...     return html()(
@@ -128,3 +132,5 @@ Features and patterns
       >>> frag("Hello world", "!").render_into(builder)
       >>> builder
       ['Hello world', '!']
+      >>> "".join(builder)
+      'Hello world!'
