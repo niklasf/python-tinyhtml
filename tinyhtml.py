@@ -29,7 +29,7 @@ Attribute = Union[str, int, bool, Iterable[Union[str, int]], Dict[str, bool], No
 
 
 class h(Frag):
-    def __init__(self, __name: str, attrs: Dict[str, Attribute]) -> None:
+    def __init__(self, __name: str, **attrs: Attribute) -> None:
         # See "Tag name" in
         # https://www.w3.org/TR/html52/syntax.html#writing-html-documents-elements.
         if not (__name and __name.isascii() and __name.isalnum()):
@@ -55,6 +55,7 @@ class h(Frag):
             builder.append("=\"")
             builder.append(escape(str(value)))
             builder.append("\"")
+        builder.append(">")
 
     def __call__(self, *children: Child) -> NormalElement:
         return _h(self, children)
@@ -106,7 +107,7 @@ def _render_into(child: Child, builder: List[str]) -> None:
     elif isinstance(child, str):
         builder.append(escape(child, quote=False))
     elif isinstance(child, Frag):
-        child.render_into(frag)
+        child.render_into(builder)
     elif hasttr(child, "__iter__"):
         for c in child:
             _render_into(c, builder)
