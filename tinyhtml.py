@@ -108,7 +108,7 @@ def _render_into(child: Child, builder: List[str]) -> None:
         builder.append(escape(child, quote=False))
     elif isinstance(child, Frag):
         child.render_into(builder)
-    elif hasttr(child, "__iter__"):
+    elif hasattr(child, "__iter__"):
         for c in child:
             _render_into(c, builder)
     else:

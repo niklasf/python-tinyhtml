@@ -64,11 +64,28 @@ Features and patterns
       >>> layout("Hello world", frag(
       ...     h("h1")("Hello world"),
       ...     h("p")("Lorem ipsum dolor sit amet."),
-      ... )).render()
-      '<!DOCTYPE html><html><head><title>Hello world</title></head><body><h1>Hello world</h1><p>Lorem ipsum dolor sit amet.</p></body></html>'
+      ... ))
+      raw('<!DOCTYPE html><html><head><title>Hello world</title></head><body><h1>Hello world</h1><p>Lorem ipsum dolor sit amet.</p></body></html>')
 
-* Use ``klass``, append a trailing underscore (`for_`), and underscores instead
-  of dashes (``http_equiv``) to refer to attribute names.
+* Use ``str``, ``int``, other fragments, ``None``, or iterables of these as
+  child elements.
+
+  .. code:: python
+
+      >>> h("ul")(
+      ...     h("li")(n) for n in range(3)
+      ... )
+      raw('<ul><li>0</li><li>1</li><li>2</li></ul>')
+
+      >>> h("ul")(
+      ...     h("li")("Foo") if False else None,
+      ...     h("li")("Bar"),
+      ... )
+      raw('<ul><li>Bar</li></ul>')
+
+* Use ``klass``, append a trailing underscore (``for_``), or use underscores
+  instead of dashes (``http_equiv``) for attribute names that cannot be
+  Python identifiers.
 
   .. code:: python
 
@@ -80,3 +97,4 @@ Features and patterns
 
       >>> h("meta", http_equiv="refresh", content=10)
       raw('<meta http-equiv="refresh" content="10">')
+
