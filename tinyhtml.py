@@ -1,12 +1,29 @@
+import abc
+
 from typing import Union, Dict
 
 
 Attribute = Union[str, int, bool, Dict[str, bool], None]
 
-Child = Union[str, int, Frag, None, List[Union[str, int, Frag, None, int]]]
+Child = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
 
 
-class Frag:
+def _render_into(child: Child, builder: List[str]) -> None:
+    if child is None:
+        return
+    elif isinstance(child, str):
+        builder.append(html.escape(child, quote=False))
+    elif isinstance(child, Frag):
+        child.render_into(frag)
+    elif hasttr(child, "__iter__"):
+        for c in child:
+            _render_into(c, builder)
+    else:
+        builder.append(html.escape(str(child), quote=False))
+
+
+class Frag(abc.ABC):
+    @abc.abstractmethod
     def render_into(self, builder: List[str]) -> None:
         ...
 
@@ -30,16 +47,6 @@ class h(Frag):
         return _h(self, arg)
 
 
-def comment(Frag):
-    def __init__(self, __text: str) -> None:
-        self.text = __text
-
-    def render_into(self, builder: List[str]) -> None:
-        builder.append("<!--")
-        builder.append(html.escape(self.text))
-        builder.append("-->")
-
-
 class raw(Frag):
     def __init__(self, html: str) -> None:
         self.html = html
@@ -55,6 +62,9 @@ class frag(Frag):
     def render_into(self, builder: List[str]) -> None:
         for child in children:
 
+
+def comment(text: str) -> Frag:
+    return frag(raw("<!--"), raw(html.escape(text)), raw("-->"))
 
 
 def html(*children: Child) -> Frag:
