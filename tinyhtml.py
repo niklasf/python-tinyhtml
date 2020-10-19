@@ -22,7 +22,7 @@ class Frag(abc.ABC):
         return f"raw({self.render()!r})"
 
 
-Child = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
+SupportsFrag = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
 
 
 Attribute = Union[str, int, bool, Iterable[Union[str, int]], Dict[str, bool], None]
@@ -57,19 +57,19 @@ class h(Frag):
             builder.append("\"")
         builder.append(">")
 
-    def __call__(self, *children: Child) -> NormalElement:
+    def __call__(self, *children: SupportsFrag) -> NormalElement:
         return _h(self, children)
 
 
 class _h(Frag):
-    def __init__(self, tag: h, children: List[Child]) -> None:
+    def __init__(self, tag: h, children: List[SupportsFrag]) -> None:
         self.tag = tag
         self.children = children
 
     def render_into(self, builder: List[str]) -> None:
         self.tag.render_into(builder)
         for child in self.children:
-            _render_into(child, builder)
+            render_into(child, builder)
         builder.append("</")
         builder.append(self.tag.name)
         builder.append(">")
@@ -84,12 +84,12 @@ class raw(Frag):
 
 
 class frag(Frag):
-    def __init__(self, *children: Child):
+    def __init__(self, *children: SupportsFrag):
         self.children = children
 
     def render_into(self, builder: List[str]) -> None:
         for child in self.children:
-            _render_into(child, builder)
+            render_into(child, builder)
 
 
 class html(h):
@@ -101,18 +101,24 @@ class html(h):
         super().render_into(builder)
 
 
-def _render_into(child: Child, builder: List[str]) -> None:
-    if child is None:
+def render_into(frag: SupportsFrag, builder: List[str]) -> None:
+    if frag is None:
         return
-    elif isinstance(child, str):
-        builder.append(escape(child, quote=False))
-    elif isinstance(child, Frag):
-        child.render_into(builder)
-    elif hasattr(child, "__iter__"):
-        for c in child:
-            _render_into(c, builder)
+    elif isinstance(frag, str):
+        builder.append(escape(frag, quote=False))
+    elif isinstance(frag, Frag):
+        frag.render_into(builder)
+    elif hasattr(frag, "__iter__"):
+        for c in frag:
+            render_into(c, builder)
     else:
-        builder.append(escape(str(child), quote=False))
+        builder.append(escape(str(frag), quote=False))
+
+
+def render(frag: SupportsFrag) -> str:
+    builder: List[str] = []
+    render_into(frag, builder)
+    return "".join(builder)
 
 
 def _normalize_attr(attr: str) -> str:
