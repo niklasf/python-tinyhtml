@@ -50,7 +50,7 @@ class h(Frag):
                 continue
             if isinstance(value, dict):
                 value = " ".join(key for key, val in value if val)
-            elif not isinstance(value, str) and hasttr(value, "__iter__"):
+            elif not isinstance(value, str) and hasattr(value, "__iter__"):
                 value = " ".join(str(val) for val in value)
             builder.append("=\"")
             builder.append(escape(str(value)))
