@@ -40,8 +40,8 @@ escape hatch to render unescaped HTML.
 
 .. code:: python
 
-    >>> raw("<!--").render()
-    '<!--'
+    >>> raw("<!-- 💥").render()
+    '<!-- 💥'
 
 Features and patterns
 ---------------------
