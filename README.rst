@@ -29,8 +29,8 @@ Use ``frag()`` to pass around concatenated elements.
     >>> frag(
     ...     h("h1")("Lorem ipsum ..."),
     ...     h("p")("... dolor sit amet."),
-    ... ).render()
-    '<h1>Lorem ipsum ...</h1><p>... dolor sit amet.</p>'
+    ... )
+    raw('<h1>Lorem ipsum ...</h1><p>... dolor sit amet.</p>')
 
 Of course all attributes and content is properly escaped. Use ``raw()`` as an
 escape hatch to render unescaped HTML.
@@ -83,7 +83,7 @@ Features and patterns
       ... )
       raw('<ul><li>Bar</li></ul>')
 
-* Use ``str``, ``int``, ``None``, iterables of these, ``bool`` or dictionaries
+* Use ``str``, ``int``, ``None``, iterables of these, ``bool``, or dictionaries
   with boolean values as attributes.
 
   .. code:: python
@@ -115,3 +115,16 @@ Features and patterns
 
       >>> h("meta", http_equiv="refresh", content=10)
       raw('<meta http-equiv="refresh" content="10">')
+
+* Render fragments as ``str``, or into a list of ``str`` for efficient string
+  building.
+
+  .. code:: python
+
+      >>> frag("Hello world", "!").render()
+      'Hello world!'
+
+      >>> builder = []
+      >>> frag("Hello world", "!").render_into(builder)
+      >>> builder
+      ['Hello world', '!']
