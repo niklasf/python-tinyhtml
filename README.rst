@@ -10,7 +10,7 @@ This is the entire API.
 
     >>> from tinyhtml import html, h, frag, raw
 
-The most important function is `h()`. Below you see how to render attributes,
+The most important function is ``h()``. Below you see how to render attributes,
 normal elements and void/self-closing elements.
 
 .. code:: python
@@ -22,7 +22,7 @@ normal elements and void/self-closing elements.
     ... )
     raw('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"></head></html>')
 
-Use `frag()` to pass around concatenated elements.
+Use ``frag()`` to pass around concatenated elements.
 
 .. code:: python
 
@@ -32,7 +32,7 @@ Use `frag()` to pass around concatenated elements.
     ... )
     raw('<h1>Lorem ipsum ...</h1><p>... dolor sit amet.</p>')
 
-Of course all attributes and content is properly escaped. Use `raw()` as an
+Of course all attributes and content is properly escaped. Use ``raw()`` as an
 escape catch to render unescaped HTML.
 
 .. code:: python
