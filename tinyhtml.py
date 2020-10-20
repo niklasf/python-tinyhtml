@@ -20,10 +20,10 @@ class Frag(abc.ABC):
         return f"raw({self.render()!r})"
 
 
-SupportsFrag = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
+SupportsRender = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
 
 
-def render_into(frag: SupportsFrag, builder: List[str]) -> None:
+def render_into(frag: SupportsRender, builder: List[str]) -> None:
     if frag is None:
         return
     elif isinstance(frag, str):
@@ -37,7 +37,7 @@ def render_into(frag: SupportsFrag, builder: List[str]) -> None:
         builder.append(escape(str(frag), quote=False))
 
 
-def render(frag: SupportsFrag) -> str:
+def render(frag: SupportsRender) -> str:
     builder: List[str] = []
     render_into(frag, builder)
     return "".join(builder)
@@ -98,12 +98,12 @@ class h(Frag):
                 builder.append("\"")
         builder.append(">")
 
-    def __call__(self, *children: SupportsFrag) -> _h:
+    def __call__(self, *children: SupportsRender) -> _h:
         return _h(self, children)
 
 
 class _h(Frag):
-    def __init__(self, tag: h, children: List[SupportsFrag]) -> None:
+    def __init__(self, tag: h, children: List[SupportsRender]) -> None:
         self.tag = tag
         self.children = children
 
@@ -125,7 +125,7 @@ class raw(Frag):
 
 
 class frag(Frag):
-    def __init__(self, *children: SupportsFrag):
+    def __init__(self, *children: SupportsRender):
         self.children = children
 
     def render_into(self, builder: List[str]) -> None:
