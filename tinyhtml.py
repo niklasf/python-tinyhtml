@@ -1,13 +1,20 @@
 # (c) 2020 Niklas Fiekas <niklas.fiekas@backscattering.de>
 #
 # Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
-# https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
-# <LICENSE-MIT or https://opensource.org/licenses/MIT>, at your
-# option. This file may not be copied, modified, or distributed
-# except according to those terms.
+# https://www.apache.org/licenses/LICENSE-2.0> or the MIT license <LICENSE-MIT
+# or https://opensource.org/licenses/MIT>, at your option. This file may not be
+# copied, modified, or distributed except according to those terms.
 
 
 from __future__ import annotations
+
+__version__ = "1.0.0"
+__author__ = "Niklas Fiekas"
+__all__ = [
+    "Frag", "SupportsRender", "Attribute",
+    "render_into", "render",
+    "h", "raw", "frag", "html",
+]
 
 import abc
 from html import escape
