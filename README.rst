@@ -157,11 +157,11 @@ Installing
 Acknowledgements
 ----------------
 
-Inspired by (the good parts of) [scalatags](http://www.lihaoyi.com/scalatags/).
+Inspired by (the good parts of) `ScalaTags <https://www.lihaoyi.com/scalatags/>`_.
 
 License
 -------
 
 tinyhtml is dual-licensed under the
-`Apache 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_ and
-`MIT <http://opensource.org/licenses/MIT>`_ license, at your option.
+`Apache 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_ and
+`MIT <https://opensource.org/licenses/MIT>`_ license, at your option.
