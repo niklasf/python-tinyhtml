@@ -13,5 +13,6 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - run: python -m pip install tox
+    - run: python -m pip install tox mypy
+    - run: python -m mypy --strict tinyhtml.py
     - run: tox --skip-missing-interpreters
