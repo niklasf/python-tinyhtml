@@ -154,6 +154,11 @@ Installing
 
     pip install tinyhtml
 
+Acknowledgements
+----------------
+
+Inspired by (the good parts of) [scalatags](http://www.lihaoyi.com/scalatags/).
+
 License
 -------
 
