@@ -43,6 +43,14 @@ escape hatch to render unescaped HTML.
     >>> raw("<!-- 💥").render()
     '<!-- 💥'
 
+Installing
+----------
+
+::
+
+    pip install tinyhtml
+
+
 Features and patterns
 ---------------------
 
@@ -146,13 +154,6 @@ Features and patterns
 * Does not support comment nodes, unescapable raw text elements
   (like inline styles and scripts), or foreign elements (like inline SVG).
   Instead, reference external files, or use ``raw()`` with appropriate caution.
-
-Installing
-----------
-
-::
-
-    pip install tinyhtml
 
 Acknowledgements
 ----------------
