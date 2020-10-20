@@ -12,13 +12,14 @@ setuptools.setup(
     long_description=open(os.path.join(os.path.dirname(__file__), "README.rst")).read(),
     long_description_content_type="text/x-rst",
     license="MIT/Apache-2.0",
+    license_files=["LICENSE-APACHE", "LICENSE-MIT"],
     keywords="html html5 functional-programming",
     url="https://github.com/niklasf/python-tinyhtml",
+    packages=["tinyhtml"],
     zip_safe=False,  # For mypy
     package_data={
         "tinyhtml": ["py.typed"],
     },
-    package=["tinyhtml"],
     python_requires=">=3.7",
     classifiers=[
         "Development Status :: 3 - Alpha",  # "Development Status :: 5 - Production/Stable",
