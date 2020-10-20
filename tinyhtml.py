@@ -61,18 +61,41 @@ class h(Frag):
         builder.append(self.name)
         for attr, value in self.attrs.items():
             if value is False or value is None:
+                # Falsy boolean attributes are omitted altogether:
+                # https://www.w3.org/TR/html52/infrastructure.html#sec-boolean-attributes
                 continue
+
             builder.append(" ")
             builder.append(attr)
+
             if value is True:
-                continue
-            if isinstance(value, dict):
+                # Use the empty string as the value for truthy boolean
+                # attributes:
+                # https://www.w3.org/TR/html52/infrastructure.html#sec-boolean-attributes
+                value = ""
+            elif isinstance(value, dict):
                 value = " ".join(key for key, val in value.items() if val)
             elif not isinstance(value, str) and hasattr(value, "__iter__"):
                 value = " ".join(str(val) for val in value)
-            builder.append("=\"")
-            builder.append(escape(str(value), quote=True))
-            builder.append("\"")
+            else:
+                value = str(value)
+
+            # Attribute value syntax:
+            # https://www.w3.org/TR/html52/syntax.html#elements-attributes
+            if not value:
+                # If the value is an empty string, use empty attribute syntax.
+                continue
+            elif value.isalnum() and value.isascii():
+                # Conservatively use unquoted attribute value syntax.
+                builder.append("=")
+                builder.append(value)
+            else:
+                # Double-quoted attribute value syntax. No need to escape
+                # single quotes, as quote=True would do:
+                # https://github.com/python/cpython/blob/v3.9.0/Lib/html/__init__.py#L12-L25
+                builder.append("=\"")
+                builder.append(escape(value, quote=False).replace("\"", "&quot;"))
+                builder.append("\"")
         builder.append(">")
 
     def __call__(self, *children: SupportsFrag) -> _h:
