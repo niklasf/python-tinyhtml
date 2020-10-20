@@ -23,7 +23,7 @@ normal elements, and void/self-closing elements.
     ...         h("meta", charset="utf-8"),
     ...     ),
     ... ).render()
-    '<!DOCTYPE html><html lang=en><head><meta charset="utf-8"></head></html>'
+    '<!DOCTYPE html><html lang=en><head><meta charset=utf-8></head></html>'
 
 Use ``frag()`` to pass around groups of elements.
 
