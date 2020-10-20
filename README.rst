@@ -23,7 +23,7 @@ normal elements, and void/self-closing elements.
     ...         h("meta", charset="utf-8"),
     ...     ),
     ... ).render()
-    '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"></head></html>'
+    '<!DOCTYPE html><html lang=en><head><meta charset="utf-8"></head></html>'
 
 Use ``frag()`` to pass around concatenated elements.
 
@@ -101,7 +101,7 @@ Features and patterns
   .. code:: python
 
       >>> h("input", type="checkbox", checked=True, disabled=False)
-      raw('<input type="checkbox" checked>')
+      raw('<input type=checkbox checked>')
 
       >>> h("body", klass=["a", "b"])()
       raw('<body class="a b"></body>')
@@ -110,7 +110,7 @@ Features and patterns
       ...    "a": True,
       ...    "b": False,
       ... })()
-      raw('<body class="a"></body>')
+      raw('<body class=a></body>')
 
 
 * Use ``klass`` instead of ``class``, append a trailing underscore (``for_``),
@@ -120,13 +120,13 @@ Features and patterns
   .. code:: python
 
       >>> h("div", klass="container")()
-      raw('<div class="container"></div>')
+      raw('<div class=container></div>')
 
       >>> h("label", for_="name")("Name")
-      raw('<label for="name">Name</label>')
+      raw('<label for=name>Name</label>')
 
       >>> h("meta", http_equiv="refresh", content=10)
-      raw('<meta http-equiv="refresh" content="10">')
+      raw('<meta http-equiv=refresh content=10>')
 
 * Render fragments as ``str``, or into a list of ``str`` for efficient string
   building.
