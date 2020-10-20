@@ -9,3 +9,5 @@ publish:
 	rm -rf build tinyhtml.egg-info
 	python setup.py --long-description | rst2html --strict --no-raw > /dev/null
 	python setup.py sdist bdist_wheel
+	twine check dist/*
+	twine upload --skip-existing --sign dist/*
