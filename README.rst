@@ -43,7 +43,7 @@ Use ``frag()`` to pass around groups of elements.
     ... )
     raw('<h1>Lorem ipsum ...</h1><p>... dolor sit amet.</p>')
 
-Of course all attributes and content is properly escaped. Use ``raw()`` as an
+Of course all content and attributes are properly escaped. Use ``raw()`` as an
 escape hatch to render unescaped HTML.
 
 .. code:: python
