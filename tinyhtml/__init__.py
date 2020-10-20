@@ -19,7 +19,6 @@ __all__ = [
 
 import abc
 from html import escape
-
 from typing import Union, Dict, Iterable, List, Tuple
 
 
