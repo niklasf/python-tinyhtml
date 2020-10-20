@@ -1,11 +1,15 @@
 tinyhtml (Work in progress!)
 ========
 
+A tiny library to safely render compact HTML5 from Python expressions.
+
 .. image:: https://github.com/niklasf/python-tinyhtml/workflows/Test/badge.svg
     :target: https://github.com/niklasf/python-tinyhtml/actions
     :alt: Test status
 
-A tiny library to safely render compact HTML5 from Python expressions.
+.. image:: https://badge.fury.io/py/tinyhtml.svg
+    :target: https://pypi.python.org/pypi/tinyhtml
+    :alt: PyPI package
 
 Introduction
 ------------
