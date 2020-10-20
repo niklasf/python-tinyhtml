@@ -171,6 +171,6 @@ Inspired by (the good parts of) `ScalaTags <https://www.lihaoyi.com/scalatags/>`
 License
 -------
 
-tinyhtml is dual-licensed under the
-`Apache 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_ and
-`MIT <https://opensource.org/licenses/MIT>`_ license, at your option.
+Licensed under the
+`Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_,
+or the `MIT license <https://opensource.org/licenses/MIT>`_, at your option.
