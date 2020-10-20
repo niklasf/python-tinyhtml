@@ -25,7 +25,7 @@ normal elements, and void/self-closing elements.
     ... ).render()
     '<!DOCTYPE html><html lang=en><head><meta charset="utf-8"></head></html>'
 
-Use ``frag()`` to pass around concatenated elements.
+Use ``frag()`` to pass around groups of elements.
 
 .. code:: python
 
