@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name="tinyhtml",
-    version="1.0.0",
+    version="1.0.0",  # Remember to update version in tinyhtml.py
     author="Niklas Fiekas",
     author_email="niklas.fiekas@backscattering.de",
     description="A tiny library to safely render compact HTML5 from Python expressions.",
