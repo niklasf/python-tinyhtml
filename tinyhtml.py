@@ -81,6 +81,7 @@ class h(Frag):
                 # https://www.w3.org/TR/html52/infrastructure.html#sec-boolean-attributes
                 continue
 
+            # Attribute name is normalized/validated in constructor.
             builder.append(" ")
             builder.append(attr)
 
