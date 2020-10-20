@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/x-rst",
     license="MIT/Apache-2.0",
     license_files=["LICENSE-APACHE", "LICENSE-MIT"],
-    keywords="html html5 functional-programming",
+    keywords="html html5 vdom functional-programming",
     url="https://github.com/niklasf/python-tinyhtml",
     packages=["tinyhtml"],
     zip_safe=False,  # For mypy
