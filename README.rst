@@ -143,6 +143,10 @@ Features and patterns
       >>> "".join(builder)
       'Hello world!'
 
+* Does not support comment nodes, unescapable raw text elements
+  (like inline styles and scripts), or foreign elements (like inline SVG).
+  Instead, reference external files, or use ``raw()`` with appropriate caution.
+
 Installing
 ----------
 

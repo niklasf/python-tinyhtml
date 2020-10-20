@@ -1,7 +1,4 @@
 copyright header
-maybe remove attribute quotes: https://www.w3.org/TR/html52/syntax.html#elements-attributes
-maybe do not quote ': https://github.com/python/cpython/blob/master/Lib/html/__init__.py
-mention comments, unescapable raw text elements, foreign elements
 mypy
 setup.py
 test
