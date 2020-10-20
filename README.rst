@@ -1,4 +1,4 @@
-tinyhtml (Work in progress!)
+tinyhtml
 ========
 
 A tiny library to safely render compact HTML5 from Python expressions.
