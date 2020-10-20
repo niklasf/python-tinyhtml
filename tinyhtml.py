@@ -3,7 +3,7 @@ from __future__ import annotations
 import abc
 from html import escape
 
-from typing import Union, Dict, Iterable
+from typing import Union, Dict, Iterable, List, Tuple
 
 
 class Frag(abc.ABC):
@@ -31,7 +31,7 @@ def render_into(frag: SupportsRender, builder: List[str]) -> None:
     elif isinstance(frag, Frag):
         frag.render_into(builder)
     elif hasattr(frag, "__iter__"):
-        for c in frag:
+        for c in frag:  # type: ignore
             render_into(c, builder)
     else:
         builder.append(escape(str(frag), quote=False))
@@ -76,7 +76,7 @@ class h(Frag):
             elif isinstance(value, dict):
                 value = " ".join(key for key, val in value.items() if val)
             elif not isinstance(value, str) and hasattr(value, "__iter__"):
-                value = " ".join(str(val) for val in value)
+                value = " ".join(str(val) for val in value)  # type: ignore
             else:
                 value = str(value)
 
@@ -103,7 +103,7 @@ class h(Frag):
 
 
 class _h(Frag):
-    def __init__(self, tag: h, children: List[SupportsRender]) -> None:
+    def __init__(self, tag: h, children: Tuple[SupportsRender, ...]) -> None:
         self.tag = tag
         self.children = children
 
