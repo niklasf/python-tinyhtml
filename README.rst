@@ -1,6 +1,10 @@
 tinyhtml (Work in progress!)
 ========
 
+.. image:: https://github.com/niklasf/python-tinyhtml/workflows/Test/badge.svg
+    :target: https://github.com/niklasf/python-tinyhtml/actions
+    :alt: Test status
+
 A tiny library to safely render compact HTML5 from Python expressions.
 
 Introduction
