@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name="tinyhtml",
-    version="1.0.0a1",  # Remember to update version in tinyhtml.py
+    version="1.0.0b1",  # Remember to update version in tinyhtml.py
     author="Niklas Fiekas",
     author_email="niklas.fiekas@backscattering.de",
     description="A tiny library to safely render compact HTML5 from Python expressions.",
@@ -22,7 +22,7 @@ setuptools.setup(
     },
     python_requires=">=3.7",
     classifiers=[
-        "Development Status :: 3 - Alpha",  # "Development Status :: 5 - Production/Stable",
+        "Development Status :: 4 - Beta",  # Development Status :: 5 - Production/Stable,
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "License :: OSI Approved :: Apache Software License",

@@ -8,7 +8,7 @@
 
 from __future__ import annotations
 
-__version__ = "1.0.0a1"  # Remember to update setup.py
+__version__ = "1.0.0b1"  # Remember to update setup.py
 __author__ = "Niklas Fiekas"
 __all__ = [
     "Frag", "SupportsRender", "Attribute",
