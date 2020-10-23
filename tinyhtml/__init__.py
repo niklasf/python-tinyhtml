@@ -92,9 +92,13 @@ class h(Frag):
                 # attributes:
                 # https://www.w3.org/TR/html52/infrastructure.html#sec-boolean-attributes
                 value = ""
+            elif isinstance(value, str):
+                pass
             elif isinstance(value, dict):
                 value = " ".join(key for key, val in value.items() if val)
-            elif not isinstance(value, str) and hasattr(value, "__iter__"):
+            elif isinstance(value, bytes):
+                raise TypeError(f"cannot render bytes as html attribute: {value!r}")
+            elif hasattr(value, "__iter__"):
                 value = " ".join(str(val) for val in value)  # type: ignore
             else:
                 value = str(value)
@@ -171,6 +175,6 @@ def _normalize_attr(attr: str) -> str:
     # Slightly more restrictive than "Attribute names" in
     # https://www.w3.org/TR/html52/syntax.html#elements-attributes.
     if not (attr and attr.isascii() and all(ch.isalnum() or ch == "-" for ch in attr)):
-        raise ValueError(f"invalid html attribute: {attr!r}")
+        raise ValueError(f"invalid html attribute name: {attr!r}")
 
     return attr
