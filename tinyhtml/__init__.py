@@ -46,6 +46,8 @@ def render_into(frag: SupportsRender, builder: List[str]) -> None:
         builder.append(escape(frag, quote=False))
     elif isinstance(frag, Frag):
         frag.render_into(builder)
+    elif isinstance(frag, bytes):
+        raise TypeError(f"cannot render bytes as html: {frag!r}")
     elif hasattr(frag, "__iter__"):
         for c in frag:  # type: ignore
             render_into(c, builder)
