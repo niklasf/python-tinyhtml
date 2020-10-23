@@ -48,8 +48,10 @@ escape hatch to render unescaped HTML.
 
 .. code:: python
 
-    >>> raw("<!-- 💥").render()
-    '<!-- 💥'
+    >>> print(h("a", title="&<>\"'")("&<>\"'").render())
+    <a title="&amp;&lt;&gt;&quot;'">&amp;&lt;&gt;"'</a>
+    >>> print(raw("<!-- 💥"))
+    <!-- 💥
 
 Installing
 ----------
