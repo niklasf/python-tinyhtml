@@ -50,6 +50,7 @@ escape hatch to render unescaped HTML.
 
     >>> print(h("a", title="&<>\"'")("&<>\"'").render())
     <a title="&amp;&lt;&gt;&quot;'">&amp;&lt;&gt;"'</a>
+
     >>> print(raw("<!-- 💥"))
     <!-- 💥
 
