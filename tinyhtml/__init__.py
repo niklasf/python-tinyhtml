@@ -61,7 +61,7 @@ def render(frag: SupportsRender) -> str:
     return "".join(builder)
 
 
-Attribute = Union[str, int, bool, Iterable[Union[str, int]], Dict[str, bool], None]
+Attribute = Union[str, int, bool, Iterable[Union[str, int, None]], Dict[str, bool], None]
 
 
 class h(Frag):
@@ -99,7 +99,7 @@ class h(Frag):
             elif isinstance(value, bytes):
                 raise TypeError(f"cannot render bytes as html attribute: {value!r}")
             elif hasattr(value, "__iter__"):
-                value = " ".join(str(val) for val in value)  # type: ignore
+                value = " ".join(str(val) for val in value if val is not None)  # type: ignore
             else:
                 value = str(value)
 
