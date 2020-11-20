@@ -82,26 +82,29 @@ class h(Frag):
                 # Falsy boolean attributes are omitted altogether:
                 # https://www.w3.org/TR/html52/infrastructure.html#sec-boolean-attributes
                 continue
-
-            # Attribute name is normalized/validated in constructor.
-            builder.append(" ")
-            builder.append(attr)
-
-            if value is True:
+            elif value is True:
                 # Use the empty string as the value for truthy boolean
                 # attributes:
                 # https://www.w3.org/TR/html52/infrastructure.html#sec-boolean-attributes
                 value = ""
             elif isinstance(value, str):
                 pass
-            elif isinstance(value, dict):
-                value = " ".join(key for key, val in value.items() if val)
             elif isinstance(value, bytes):
                 raise TypeError(f"cannot render bytes as html attribute: {value!r}")
             elif hasattr(value, "__iter__"):
-                value = " ".join(str(val) for val in value if val is not None)  # type: ignore
+                if isinstance(value, dict):
+                    value = " ".join(key for key, val in value.items() if val)
+                else:
+                    value = " ".join(str(val) for val in value if val is not None)  # type: ignore
+                if not value:
+                    # Omit attributes with empty lists or dictionaries entirely.
+                    continue
             else:
                 value = str(value)
+
+            # Attribute name is normalized/validated in constructor.
+            builder.append(" ")
+            builder.append(attr)
 
             # Attribute value syntax:
             # https://www.w3.org/TR/html52/syntax.html#elements-attributes
