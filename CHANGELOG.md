@@ -1,8 +1,8 @@
 Chanelog for tinyhtml
 =====================
 
-Upcoming in v1.1.0
-------------------
+New in v1.1.0
+-------------
 
 * Empty list and dictionary attriutes will now be omitted entirely.
   Example:
