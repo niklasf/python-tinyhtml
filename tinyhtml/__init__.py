@@ -111,10 +111,6 @@ class h(Frag):
             if not value:
                 # If the value is an empty string, use empty attribute syntax.
                 continue
-            elif all(ch.isalnum() or ch == "-" for ch in value) and value.isascii():
-                # Conservatively use unquoted attribute value syntax.
-                builder.append("=")
-                builder.append(value)
             else:
                 # Double-quoted attribute value syntax. No need to escape
                 # single quotes, as quote=True would do:
