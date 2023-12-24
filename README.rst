@@ -165,11 +165,6 @@ Features and patterns
   (like inline styles and scripts), or foreign elements (like inline SVG).
   Instead, reference external files, or use ``raw()`` with appropriate caution.
 
-Acknowledgements
-----------------
-
-Inspired by (the good parts of) `ScalaTags <https://www.lihaoyi.com/scalatags/>`_.
-
 License
 -------
 
