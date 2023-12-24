@@ -49,7 +49,7 @@ def render_into(frag: SupportsRender, builder: List[str]) -> None:
     elif isinstance(frag, bytes):
         raise TypeError(f"cannot render bytes as html: {frag!r}")
     elif hasattr(frag, "__iter__"):
-        for c in frag:  # type: ignore
+        for c in frag:
             render_into(c, builder)
     else:
         builder.append(escape(str(frag), quote=False))
@@ -95,7 +95,7 @@ class h(Frag):
                 if isinstance(value, dict):
                     value = " ".join(key for key, val in value.items() if val)
                 else:
-                    value = " ".join(str(val) for val in value if val is not None)  # type: ignore
+                    value = " ".join(str(val) for val in value if val is not None)
                 if not value:
                     # Omit attributes with empty lists or dictionaries entirely.
                     continue
