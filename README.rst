@@ -65,8 +65,6 @@ Installing
 Features and patterns
 ---------------------
 
-* Supports Python 3.7+.
-
 * Output is compact: Naturally produces no superfluous whitespace between
   elements.
 
