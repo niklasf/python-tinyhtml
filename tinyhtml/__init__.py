@@ -42,6 +42,7 @@ class SupportsDunderHTML(Protocol):
     def __html__(self) -> str:
         pass
 
+
 @runtime_checkable
 class SupportsJupyterReprHTML(Protocol):
 
