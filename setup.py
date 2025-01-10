@@ -21,6 +21,9 @@ setuptools.setup(
         "tinyhtml": ["py.typed"],
     },
     python_requires=">=3.8",
+    extras_require={
+        'test': ['jinja2', 'pandas']
+    },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
