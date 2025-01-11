@@ -185,6 +185,7 @@ use the ``__html__`` convention, such as Jinja2 via
   .. code:: python
 
       >>> import jinja2
+      >>>
       >>> template = jinja2.Template('<div>{{ fragment }}</div>')
       >>> frag = h('ul')(h('li')(i) for i in range(2))
       >>> template.render(fragment=frag)
@@ -197,6 +198,7 @@ use the ``__html__`` convention, such as Jinja2 via
   .. code:: python
 
       >>> import pandas as pd
+      >>>
       >>> table = pd.DataFrame({'Fruit': ['apple', 'pear'], 'Count': [3, 4]})
       >>> h('div')(h('h1')('A table'), table) # doctest: +ELLIPSIS
       raw('<div><h1>A table</h1><div>...<table ...>...<td>apple</td>...</table>...</div>')
