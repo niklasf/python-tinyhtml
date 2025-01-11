@@ -68,7 +68,15 @@ Features and patterns
 * Output is compact: Naturally produces no superfluous whitespace between
   elements.
 
-* Fragments provide ``_repr_html_()`` for Jupyter Notebook integration.
+* Fragments provide ``_repr_html_()`` for Jupyter Notebook integration and
+  ``__html__`` for integration with other ecosystems (see
+  `MarkupSafe`_).
+
+  .. _MarkupSafe: <https://markupsafe.palletsprojects.com/en/stable/html/>
+
+* Fragments can include and render objects providing ``_repr_html_()`` and
+  ``__html__()``. This means objects that already render as HTML in a
+  Jupyter notebook will be rendered by tinyhtml.
 
 * Includes mypy typings.
 
@@ -162,6 +170,39 @@ Features and patterns
 * Does not support comment nodes, unescapable raw text elements
   (like inline styles and scripts), or foreign elements (like inline SVG).
   Instead, reference external files, or use ``raw()`` with appropriate caution.
+
+
+Interoperability
+----------------
+
+Fragments implement `_repr_html_` and can be displayed in Jupyter notebooks as HTML,
+but they can also render object that implement `_repr_html_`. Similarly fragments
+can include and be included in other template systems that use the `__html__` convention,
+such as Jinja2 via `MarkupSafe`_.
+
+* Render fragments into a Jinja template.
+
+  .. code:: python
+
+      >>> import jinja2
+      >>> template = jinja2.Template('<div>{{ fragment }}</div>')
+      >>> frag = h('ul')(h('li')(i) for i in range(2))
+      >>> template.render(fragment=frag)
+      '<div><ul><li>0</li><li>1</li></ul></div>'
+
+
+* Render an object the supports display in a Jupyter notebook, such as a pandas
+  dataframe.
+
+  .. code:: python
+
+      >>> import pandas as pd
+      >>> table = pd.DataFrame({'Fruit': ['apple', 'pear'], 'Count': [3, 4]})
+      >>> frag = h('div')(h('h1')('A table'), table)
+      >>> frag.render()
+      '<div><h1>A table</h1><div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border="1" class="dataframe">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Fruit</th>\n      <th>Count</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>apple</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>pear</td>\n      <td>4</td>\n    </tr>\n  </tbody>\n</table>\n</div></div>'
+
+
 
 License
 -------

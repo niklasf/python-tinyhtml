@@ -19,7 +19,7 @@ __all__ = [
 
 import abc
 from html import escape
-from typing import Union, Dict, Iterable, List, Tuple
+from typing import Union, Dict, Iterable, List, Tuple, Protocol, runtime_checkable
 
 
 class Frag(abc.ABC):
@@ -30,13 +30,28 @@ class Frag(abc.ABC):
     def render(self) -> str:
         return render(self)
 
-    _repr_html_ = __str__ = render
+    _repr_html_ = __str__ = __html__ = render
 
     def __repr__(self) -> str:
         return f"raw({self.render()!r})"
 
 
-SupportsRender = Union[str, int, Frag, None, Iterable[Union[str, int, Frag, None]]]
+@runtime_checkable
+class SupportsDunderHTML(Protocol):
+
+    def __html__(self) -> str:
+        pass
+
+
+@runtime_checkable
+class SupportsJupyterReprHTML(Protocol):
+
+    def _repr_html_(self) -> str:
+        pass
+
+
+RenderableItem = Union[SupportsDunderHTML, SupportsJupyterReprHTML, str, int, Frag, None]
+SupportsRender = Union[RenderableItem, Iterable[RenderableItem]]
 
 
 def render_into(frag: SupportsRender, builder: List[str]) -> None:
@@ -46,6 +61,10 @@ def render_into(frag: SupportsRender, builder: List[str]) -> None:
         builder.append(escape(frag, quote=False))
     elif isinstance(frag, Frag):
         frag.render_into(builder)
+    elif isinstance(frag, SupportsDunderHTML):
+        builder.append(frag.__html__())
+    elif isinstance(frag, SupportsJupyterReprHTML):
+        builder.append(frag._repr_html_())
     elif isinstance(frag, bytes):
         raise TypeError(f"cannot render bytes as html: {frag!r}")
     elif hasattr(frag, "__iter__"):
