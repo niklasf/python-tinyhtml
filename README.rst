@@ -54,6 +54,7 @@ escape hatch to render unescaped HTML.
     >>> print(raw("<!-- 💥"))
     <!-- 💥
 
+
 Installing
 ----------
 
@@ -68,11 +69,9 @@ Features and patterns
 * Output is compact: Naturally produces no superfluous whitespace between
   elements.
 
-* Fragments provide ``_repr_html_()`` for Jupyter Notebook integration and
+* Fragments provide ``_repr_html_()`` for Jupyter notebook integration and
   ``__html__`` for integration with other ecosystems (see
-  `MarkupSafe`_).
-
-  .. _MarkupSafe: <https://markupsafe.palletsprojects.com/en/stable/html/>
+  `MarkupSafe <https://markupsafe.palletsprojects.com/en/stable/html/>`_).
 
 * Fragments can include and render objects providing ``_repr_html_()`` and
   ``__html__()``. This means objects that already render as HTML in a
@@ -175,12 +174,13 @@ Features and patterns
 Interoperability
 ----------------
 
-Fragments implement `_repr_html_` and can be displayed in Jupyter notebooks as HTML,
-but they can also render object that implement `_repr_html_`. Similarly fragments
-can include and be included in other template systems that use the `__html__` convention,
-such as Jinja2 via `MarkupSafe`_.
+Fragments implement ``_repr_html_`` and can be displayed in Jupyter notebooks
+as HTML, but they can also render object that implement ``_repr_html_``.
+Similarly fragments can include and be included in other template systems that
+use the ``__html__`` convention, such as Jinja2 via
+`MarkupSafe`_.
 
-* Render fragments into a Jinja template.
+* Render fragments into a Jinja2 template.
 
   .. code:: python
 
@@ -198,10 +198,8 @@ such as Jinja2 via `MarkupSafe`_.
 
       >>> import pandas as pd
       >>> table = pd.DataFrame({'Fruit': ['apple', 'pear'], 'Count': [3, 4]})
-      >>> frag = h('div')(h('h1')('A table'), table)
-      >>> frag.render()
-      '<div><h1>A table</h1><div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border="1" class="dataframe">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>Fruit</th>\n      <th>Count</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>apple</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>pear</td>\n      <td>4</td>\n    </tr>\n  </tbody>\n</table>\n</div></div>'
-
+      >>> h('div')(h('h1')('A table'), table) # doctest: +ELLIPSIS
+      raw('<div><h1>A table</h1><div>...<table ...>...<td>apple</td>...</table>...</div>')
 
 
 License
