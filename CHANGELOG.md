@@ -1,6 +1,12 @@
 Chanelog for tinyhtml
 =====================
 
+New in v1.3.0
+-------------
+
+* Now supports interoperability with Jupyter (`_repr_html_`) and MarkupSafe
+  (`__html__`) in both directions.
+
 New in v1.2.0
 -------------
 

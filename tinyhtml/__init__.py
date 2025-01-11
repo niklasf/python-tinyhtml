@@ -9,7 +9,7 @@
 
 from __future__ import annotations
 
-__version__ = "1.2.0"  # Remember to update setup.py
+__version__ = "1.3.0"  # Remember to update setup.py
 __author__ = "Niklas Fiekas"
 __all__ = [
     "Frag", "SupportsRender", "Attribute",
@@ -38,14 +38,12 @@ class Frag(abc.ABC):
 
 @runtime_checkable
 class SupportsDunderHTML(Protocol):
-
     def __html__(self) -> str:
         pass
 
 
 @runtime_checkable
 class SupportsJupyterReprHTML(Protocol):
-
     def _repr_html_(self) -> str:
         pass
 
